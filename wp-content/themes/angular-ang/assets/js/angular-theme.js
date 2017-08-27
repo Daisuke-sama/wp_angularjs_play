@@ -16,6 +16,15 @@ wpApp.controller( 'ListCtrl', [
 	}
 ] );
 
+wpApp.controller( 'DetailCtrl', [
+	'$scope', '$stateParams', 'Posts', function ( $scope, $stateParams, Posts ) {
+		console.log( $stateParams );
+		Posts.get( {ID: $stateParams.id}, function ( res ) {
+			$scope.post = res;
+		} )
+	}
+] );
+
 wpApp.config( function ( $stateProvider, $urlRouterProvider ) {
 	$urlRouterProvider.otherwise( '/' );
 	$stateProvider
@@ -23,6 +32,11 @@ wpApp.config( function ( $stateProvider, $urlRouterProvider ) {
 			url: '/',
 			controller: 'ListCtrl',
 			templateUrl: appInfo.template_directory + 'templates/list.html'
+		} )
+		.state( 'detail', {
+			url: '/posts/:id',
+			controller: 'DetailCtrl',
+			templateUrl: appInfo.template_directory + 'templates/detail.html'
 		} )
 } );
 
