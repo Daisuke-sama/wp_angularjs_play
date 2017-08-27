@@ -17,11 +17,19 @@ wpApp.controller( 'ListCtrl', [
 ] );
 
 wpApp.config( function ( $stateProvider, $urlRouterProvider ) {
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise( '/' );
 	$stateProvider
-		.state('list', {
+		.state( 'list', {
 			url: '/',
 			controller: 'ListCtrl',
 			templateUrl: appInfo.template_directory + 'templates/list.html'
-		})
-});
+		} )
+} );
+
+wpApp.filter( 'to_trusted', [
+	'$sce', function ( $sce ) {
+		return function ( text ) {
+			return $sce.trustAsHtml( text );
+		}
+	}
+] );
